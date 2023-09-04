@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Operation from './Operation';
+import {deleteOperation} from "../api/operations";
 
 export default function Operations(props) {
 
@@ -16,6 +17,14 @@ export default function Operations(props) {
         })
 
         elements[0].value = ""
+    }
+
+    const handleRemoveOperation = (id) => {
+        // console.log(id)
+        deleteOperation(id, data => {
+            // console.log(data)
+            props.onRemoveOperation(id)
+        })
     }
 
     return (
@@ -44,7 +53,8 @@ export default function Operations(props) {
             <ul className="list-group list-group-flush">
                 {
                     props.operations && props.operations.map(operation => <Operation key={operation.id}
-                                                                                     operation={operation}/>)
+                                                                                     operation={operation}
+                                                                                     onRemoveOperation={handleRemoveOperation}/>)
                 }
             </ul>
         </>

@@ -46,6 +46,10 @@ export default function Task({task, onRemoveTask}) {
         })
     }
 
+    const handleRemoveOperation = (id) => {
+        setOperations(operations.filter(operation => operation.id !== id))
+    }
+
     return (
         <section className="card mt-5 shadow-sm">
             <div className="card-header d-flex justify-content-between align-items-center">
@@ -83,7 +87,7 @@ export default function Task({task, onRemoveTask}) {
             </div>
 
             <Operations task={task} operations={operations} form={componentState}
-                        updateOperations={updateOperations}/>
+                        updateOperations={updateOperations} onRemoveOperation={handleRemoveOperation}/>
         </section>
     )
 }

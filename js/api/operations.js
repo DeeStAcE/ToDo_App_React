@@ -32,7 +32,7 @@ export const getOperations = async (id, successCallback) => {
 export const addNewOperation = async (id, operation, successCallback) => {
     try {
         const response = await fetch(`${API_URL}/tasks/${id}/operations`, {
-           method: 'POST',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: API_KEY,
@@ -52,7 +52,52 @@ export const addNewOperation = async (id, operation, successCallback) => {
     }
 };
 
-// TODO
-// getOperation
-// updateOperation
-// deleteOperation
+/**
+ * Update operation
+ */
+export const updateOperation = async (id, operation, successCallback) => {
+    try {
+        const response = await fetch(`${API_URL}/operations/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: API_KEY,
+            },
+            body: JSON.stringify(operation)
+        });
+
+        const data = await response.json();
+
+        if (data.error || typeof successCallback !== "function") {
+            throw new Error("Błąd!");
+        }
+
+        successCallback(data.data);
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+/**
+ * Delete operation
+ */
+export const deleteOperation = async (id, successCallback) => {
+    try {
+        const response = await fetch(`${API_URL}/operations/${id}`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: API_KEY,
+            },
+        });
+
+        const data = await response.json();
+
+        if (data.error || typeof successCallback !== "function") {
+            throw new Error("Błąd!");
+        }
+
+        successCallback(data.data);
+    } catch (err) {
+        console.log(err);
+    }
+};
